@@ -2,12 +2,13 @@ import optionsStorage from './options-storage';
 
 optionsStorage.syncForm('#options-form');
 
-
+/*
 function optionsPageLoaded(){
 	console.log("optionsPageLoaded");
 }
 
 window.addEventListener('load', optionsPageLoaded);
+*/
 
 function resetDefaultURLs(){
     console.log("Click");
