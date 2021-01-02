@@ -1,0 +1,13 @@
+h2,
+h3,
+h4 {
+	width: 100%;
+	margin-top: 0;
+	margin-bottom: 0.25rem;
+}
+
+input {
+    width:100%;
+}
+
+
