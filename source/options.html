@@ -1,0 +1,29 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Github Code Review Notification</title>
+<link rel="stylesheet" href="options.css">
+
+
+<form id="options-form">
+	<section>
+		<h3>Configure GitHub URLs</h3>
+		<p>
+			Specify base URLs of Github and/or Github Enterprise you want to monitor.
+			[ To monitor only Github Enterprise, remove the Github URL entry from below input-box. ]
+		</p>
+		<p>
+			<h4>Github URL</h4>
+			<input id="github_url_1" name="github_url_1" placeholder="e.g. https://github.com" value="https://github.com">
+		</p>
+		<p>
+			<h4>GitHub Enterprise URL</h4>
+			<input id="github_url_2" name="github_url_2" placeholder="e.g. https://github.your-company.com">
+		</p>
+	</section>
+</form>
+<p>
+	<button id="restore_default_urls">Restore Defaults</button>
+</p>
+
+<script src="browser-polyfill.min.js"></script>
+<script src="options.js"></script>
