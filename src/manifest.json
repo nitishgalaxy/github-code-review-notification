@@ -1,0 +1,28 @@
+{
+    "manifest_version": 2,
+    "name": "Github Code Review Notification",
+    "version": "1.0",
+    "description": "Browser Extension to show notification as a reminder for pending code reviews.",
+    "icons":{
+      "48": "icon48.png",
+      "16": "icon16.png"
+    },
+    "browser_action": {
+      "default_icon": "icon48.png"
+    },
+    "background": {
+      "scripts": ["background.js"],
+      "persistent": true
+    },
+    "options_ui": {
+      "page": "options.html",
+      "chrome_style": true
+    },  
+    "permissions": [
+      "https://github.com/*",
+      "https://github.office.opendns.com/*",
+      "storage",
+      "notifications"
+    ],
+    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
+  }
