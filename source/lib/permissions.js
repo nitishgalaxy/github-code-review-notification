@@ -15,3 +15,4 @@ export async function requestPermission(permission_object) {
 		return false;
 	}
 }
+ 

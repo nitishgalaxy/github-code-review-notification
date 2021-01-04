@@ -8,7 +8,7 @@ module.exports = {
 	stats: 'errors-only',
 	entry: {
 		background: './source/background',
-		options: './source/options'
+		options: './source/options/options'
 	},
 	output: {
 		path: path.join(__dirname, 'distribution'),
@@ -20,7 +20,7 @@ module.exports = {
 			{
 				from: '**/*',
 				context: 'source',
-				ignore: ['*.js']
+				//ignore: ['*.js']
 			},
 			{
 				from: 'node_modules/webextension-polyfill/dist/browser-polyfill.min.js'

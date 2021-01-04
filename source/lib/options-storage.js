@@ -1,5 +1,5 @@
 import OptionsSync from 'webext-options-sync';
-import {GITHUB_URL} from './lib/constants';
+import {GITHUB_URL} from './constants';
 
 
 export default new OptionsSync({
