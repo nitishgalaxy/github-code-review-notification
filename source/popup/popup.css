@@ -1,0 +1,12 @@
+.container{
+    margin: 10px;
+    min-width: 300px;
+}
+
+.item{
+    padding-bottom: 15px;
+}
+
+h4{
+    color: #006699;
+}

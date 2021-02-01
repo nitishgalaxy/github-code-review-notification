@@ -9,3 +9,11 @@ h4 {
 input {
     width:100%;
 }
+
+.section{
+	padding:10px;
+}
+
+.section-2{
+	padding:0px 10px 10px 10px;
+}

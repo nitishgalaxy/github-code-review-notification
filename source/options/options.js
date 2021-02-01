@@ -9,6 +9,6 @@ function resetDefaultURLs(){
     document.getElementById("github_url_2").value = "";
 }
 
-document.getElementById("restore_default_urls").addEventListener("click", resetDefaultURLs);
+//document.getElementById("restore_default_urls").addEventListener("click", resetDefaultURLs);
 
 

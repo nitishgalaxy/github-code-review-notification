@@ -15,7 +15,7 @@ async function loadGithubUrls(){
     const github_url_2 = await store.get('github_url_2');
     console.log("github_url_1 :", github_url_1, "github_url_2 :", github_url_2);
     setSpanContent("github_url_1", github_url_1);
-    setSpanContent("github_url_1", github_url_2);
+    setSpanContent("github_url_2", github_url_2);
 
 }
 
