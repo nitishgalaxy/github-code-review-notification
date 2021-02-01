@@ -1,3 +1,4 @@
+'use strict';
 const path = require('path');
 const SizePlugin = require('size-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -7,8 +8,9 @@ module.exports = {
 	devtool: 'source-map',
 	stats: 'errors-only',
 	entry: {
-		background: './source/background',
-		options: './source/options/options'
+		background: './source/background.js',
+		options: './source/options/options.js',
+		popup: './source/popup/popup.js'
 	},
 	output: {
 		path: path.join(__dirname, 'distribution'),

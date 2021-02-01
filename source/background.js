@@ -20,6 +20,11 @@ async function refreshCounter(task){
 async function pollingService(){
 
     const {github_url_1, github_url_2} = await options_storage.getAll();
+
+    // Cache current options in browser store
+    store.set('github_url_1', github_url_1);
+    store.set('github_url_2', github_url_2);
+
     var tasks = [];
     if(github_url_1.trim().length > 0){
         tasks.push({
