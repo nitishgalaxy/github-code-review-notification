@@ -1,5 +1,5 @@
-import OptionsSync from 'webext-options-sync';
-import {GITHUB_URL} from './constants';
+import OptionsSync from './webext-options-sync.js';
+import {GITHUB_URL} from './constants.js';
 
 
 export default new OptionsSync({
@@ -7,8 +7,6 @@ export default new OptionsSync({
 		github_url_1: GITHUB_URL,
 		github_url_2: ""
 	},
-	migrations: [
-		OptionsSync.migrations.removeUnused
-	],
+
 	logging: true
 });

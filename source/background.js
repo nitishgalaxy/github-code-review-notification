@@ -1,8 +1,8 @@
 // eslint-disable-next-line import/no-unassigned-import
-import options_storage from './lib/options-storage';
-import {get_pending_review_count} from './lib/api';
-import {POLLING_INTERVAL} from './lib/constants';
-import store from './lib/data_store';
+import options_storage from './lib/options-storage.js';
+import {get_pending_review_count} from './lib/api.js';
+import {POLLING_INTERVAL} from './lib/constants.js';
+import store from './lib/data_store.js';
 
 
 

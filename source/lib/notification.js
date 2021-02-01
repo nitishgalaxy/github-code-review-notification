@@ -1,4 +1,4 @@
-import store from './data_store';
+import store from './data_store.js';
 
 
 export function getCodeReviewCounters(){

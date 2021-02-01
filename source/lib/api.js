@@ -1,7 +1,7 @@
 import Timeout from 'await-timeout';
 import {GITHUB_REVIEW_REQUEST_CSS_SELECTOR, 
         GITHUB_ENTERPRISE_REVIEW_REQUEST_CSS_SELECTOR, 
-        GITHUB_URL} from './constants';
+        GITHUB_URL} from './constants.js';
 
 
 function get_github_review_page_url(baseUrl) {
