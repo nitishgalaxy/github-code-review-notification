@@ -8,12 +8,15 @@ import store from './lib/data_store.js';
 
 async function refreshCounter(task){
     console.log("Processing task : ", task);
-    const review_count = await get_pending_review_count(task.url);
-    const keyname = `count_${task.type}`;
-    store.set(keyname, 0);
-    store.set(keyname, review_count);
+    const {pending_request_count, error_message} = await get_pending_review_count(task.url);
 
-   
+    const keyname_err_message = `err_message_${task.type}`;
+    store.set(keyname_err_message, error_message);
+
+    if(pending_request_count != null){
+        const keyname_count = `count_${task.type}`;
+        store.set(keyname_count, pending_request_count);
+    }
 }
 
 
