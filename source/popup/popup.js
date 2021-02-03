@@ -2,6 +2,21 @@ import store from '../lib/data_store.js';
 
 $(document).ready(function () {
 
+function displayElementByID(elm_id){
+    var element, name, arr;
+    element = document.getElementById(elm_id);
+    name = "display-none";
+    arr = element.className.split(" ");
+    if (arr.indexOf(name) == -1) {
+        element.className += " " + name;
+    }
+}
+
+function hideElementByID(elm_id){
+    var element = document.getElementById(elm_id);
+    element.className = element.className.replace(/\bdisplay-none\b/g, "");
+}
+
 function setSpanTextContent(element_id, text){
     var span = document.getElementById(element_id);
     while( span.firstChild ) {
@@ -43,6 +58,68 @@ async function showNotificationCounts(){
 }
 
 
+async function showConnectivityAndLoginStatus(){
+    var keys = ["err_message_github", "err_message_github_enterprise"];
+    keys.forEach(async function(key){
+        var value = await store.get(key);
+
+        console.log("Key = ", key, "Value = ", value);
+
+        if(key.startsWith("err_message_")){
+            var elm_id_disp = null;
+            var elm_id_hide = null;
+            
+            if(key.indexOf("github_enterprise")>=0){
+               if(value === 'connection_error'){
+                   elm_id_disp = 'offline_github_enterprise';
+                   elm_id_hide = 'logged_out_github_enterprise';
+               }
+               else if(value === 'login_error'){
+                   elm_id_disp = 'logged_out_github_enterprise';
+                   elm_id_hide = 'offline_github_enterprise';
+               }
+               else if(value === ""){
+                   elm_id_hide = 'logged_out_github_enterprise';
+                   hideElementByID(elm_id_hide);
+                   elm_id_hide = 'offline_github_enterprise';
+                   hideElementByID(elm_id_hide);
+                   elm_id_hide = null;
+               }
+            }
+            else{
+               if(value === 'connection_error'){
+                   elm_id_disp = 'offline_github';
+                   elm_id_hide = 'logged_out_github';
+               }
+               else if(value === 'login_error'){
+                   elm_id_disp = 'logged_out_github';
+                   elm_id_hide = 'offline_github';
+               }
+               else if(value === ""){
+                   elm_id_hide = 'logged_out_github';
+                   hideElementByID(elm_id_hide);
+                   elm_id_hide = 'offline_github';
+                   hideElementByID(elm_id_hide);
+                   elm_id_hide = null;
+    
+               }
+            }
+    
+           if(elm_id_disp != null){
+               displayElementByID(elm_id_disp);
+           }
+    
+           if(elm_id_hide != null){
+               hideElementByID(elm_id_hide);
+           }
+        }
+
+    });
+
+    
+}
+
+
 chrome.storage.onChanged.addListener(function(changes, namespace) {
     for (var key in changes) {
       var storageChange = changes[key];
@@ -53,16 +130,15 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
                   namespace,
                   storageChange.oldValue,
                   storageChange.newValue);
-    
-     if(key == 'github_url_1' || key == 'github_url_2')
+
         loadGithubUrls();
-     }
-
-     if(key == 'count_github' || key == 'count_github_enterprise'){
         showNotificationCounts();
-     }
-  });
 
-loadGithubUrls()
-showNotificationCounts()
+        showConnectivityAndLoginStatus();
+  }
+});
+
+loadGithubUrls();
+showNotificationCounts();
+showConnectivityAndLoginStatus();
 });

@@ -74,4 +74,8 @@ h4{
     visibility: visible;
   }
 
+
+  .display-none {
+      display: none;
+  }
  
