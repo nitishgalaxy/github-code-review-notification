@@ -43,6 +43,9 @@ export async function get_pending_review_count(github_url){
     const timer = new Timeout();
     var pending_request_count = null;
     var error_message = "";
+    var connection_error = false;
+    var login_error = false;
+    var html;
 
     try {
         // Make AJAX call and fetch the page
@@ -51,11 +54,12 @@ export async function get_pending_review_count(github_url){
             timer.set(15000, 'Timeout!')
           ]);
 
-        const html = await response.text();
+        html = await response.text();
     } catch (error) {
         // Debug
-        console.log(`Error reading '${target_url}' :`, error);
-        error_message = 'connection_error'
+        //console.log(`Error reading '${target_url}' :`, error);
+        error_message = 'connection_error';
+        connection_error = true;
     } 
 
     if(!error_message){
@@ -64,8 +68,9 @@ export async function get_pending_review_count(github_url){
         
         } catch (error) {
             // Debug
-            console.log(`Error in get_pending_request_count_from_page :`, error);
+            //console.log(`Error in get_pending_request_count_from_page :`, error);
             error_message = 'login_error'
+            login_error = true;
         } 
     }
 
@@ -75,8 +80,13 @@ export async function get_pending_review_count(github_url){
     // Debug
     //console.log(`Code review request count for ${github_url} = ${pending_request_count}`);
     var response = {
+        github_url: github_url,
         pending_request_count: pending_request_count,
-        error_message: error_message
+        connection_error: connection_error,
+        login_error: login_error
     }
+
+    //console.log(response);
+
     return response;
 }

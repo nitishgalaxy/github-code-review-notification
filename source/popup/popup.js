@@ -2,7 +2,7 @@ import store from '../lib/data_store.js';
 
 $(document).ready(function () {
 
-function displayElementByID(elm_id){
+function hideElementByID(elm_id){
     var element, name, arr;
     element = document.getElementById(elm_id);
     name = "display-none";
@@ -12,7 +12,7 @@ function displayElementByID(elm_id){
     }
 }
 
-function hideElementByID(elm_id){
+function displayElementByID(elm_id){
     var element = document.getElementById(elm_id);
     element.className = element.className.replace(/\bdisplay-none\b/g, "");
 }
@@ -39,106 +39,92 @@ function setSpanAnchorTag(element_id, url){
 
 }
 
-async function loadGithubUrls(){
-    const github_url_1 = await store.get('github_url_1');
-    const github_url_2 = await store.get('github_url_2');
-    console.log("github_url_1 :", github_url_1, "github_url_2 :", github_url_2);
-    setSpanAnchorTag("github_url_1", github_url_1);
-    setSpanAnchorTag("github_url_2", github_url_2);
+async function loadGithubUrl(ID){
+    const container_id = `container_github_url_${ID}`;
+    const span_url_display_id = `github_url_${ID}`;
+    const github_url = await store.get(`github_url_${ID}`);
 
+    
+    if(github_url.trim() === ''){
+        // Hide container
+        //console.log("Hiding container :", container_id);
+        hideElementByID(container_id);
+    }
+    else{
+        // Show container
+        //console.log("Showing container :", container_id);
+        displayElementByID(container_id);
+        setSpanAnchorTag(span_url_display_id, github_url);
+    }
 }
 
 
-async function showNotificationCounts(){
-    const count_github = await store.get('count_github');
-    const count_github_enterprise = await store.get('count_github_enterprise');
-    console.log("count_github :", count_github, "count_github_enterprise :", count_github_enterprise);
-    setSpanTextContent("count_github", count_github);
-    setSpanTextContent("count_github_enterprise", count_github_enterprise);
+async function showNotificationCount(ID){
+    const count = await store.get(`count_github_url_${ID}`);
+    const span_count = `count_github_url_${ID}`;
+
+    if(count === null || count === undefined || count === ""){
+        hideElementByID(span_count);
+    }
+    else{
+        displayElementByID(span_count);
+        setSpanTextContent(span_count, count);
+    }
+}
+
+async function showConnectivityStatus(ID){
+    const connection_error = await store.get(`connection_error_github_url_${ID}`);
+    const span_connection_error = `connection_error_github_url_${ID}`;
+
+    if(!connection_error){
+        hideElementByID(span_connection_error);
+    }
+    else{
+        displayElementByID(span_connection_error);
+    }
+}
+
+async function showLoggedInStatus(ID){
+    const login_error = await store.get(`login_error_github_url_${ID}`);
+    const span_login_error = `login_error_github_url_${ID}`;
+
+    if(!login_error){
+        hideElementByID(span_login_error);
+    }
+    else{
+        displayElementByID(span_login_error);
+    }
 }
 
 
-async function showConnectivityAndLoginStatus(){
-    var keys = ["err_message_github", "err_message_github_enterprise"];
-    keys.forEach(async function(key){
-        var value = await store.get(key);
 
-        console.log("Key = ", key, "Value = ", value);
+function refreshDashboard(){
+    var NUM_GITHUB_ACCOUNTS = 2;
+    for(var ID=1; ID<=NUM_GITHUB_ACCOUNTS; ID++){
+        loadGithubUrl(ID);
+        showNotificationCount(ID);
+        showConnectivityStatus(ID);
+        showLoggedInStatus(ID);
+    }
 
-        if(key.startsWith("err_message_")){
-            var elm_id_disp = null;
-            var elm_id_hide = null;
-            
-            if(key.indexOf("github_enterprise")>=0){
-               if(value === 'connection_error'){
-                   elm_id_disp = 'offline_github_enterprise';
-                   elm_id_hide = 'logged_out_github_enterprise';
-               }
-               else if(value === 'login_error'){
-                   elm_id_disp = 'logged_out_github_enterprise';
-                   elm_id_hide = 'offline_github_enterprise';
-               }
-               else if(value === ""){
-                   elm_id_hide = 'logged_out_github_enterprise';
-                   hideElementByID(elm_id_hide);
-                   elm_id_hide = 'offline_github_enterprise';
-                   hideElementByID(elm_id_hide);
-                   elm_id_hide = null;
-               }
-            }
-            else{
-               if(value === 'connection_error'){
-                   elm_id_disp = 'offline_github';
-                   elm_id_hide = 'logged_out_github';
-               }
-               else if(value === 'login_error'){
-                   elm_id_disp = 'logged_out_github';
-                   elm_id_hide = 'offline_github';
-               }
-               else if(value === ""){
-                   elm_id_hide = 'logged_out_github';
-                   hideElementByID(elm_id_hide);
-                   elm_id_hide = 'offline_github';
-                   hideElementByID(elm_id_hide);
-                   elm_id_hide = null;
-    
-               }
-            }
-    
-           if(elm_id_disp != null){
-               displayElementByID(elm_id_disp);
-           }
-    
-           if(elm_id_hide != null){
-               hideElementByID(elm_id_hide);
-           }
-        }
-
-    });
-
-    
 }
 
 
 chrome.storage.onChanged.addListener(function(changes, namespace) {
     for (var key in changes) {
       var storageChange = changes[key];
-      
+      /*
       console.log('Storage key "%s" in namespace "%s" changed. ' +
                   'Old value was "%s", new value is "%s".',
                   key,
                   namespace,
                   storageChange.oldValue,
                   storageChange.newValue);
-
-        loadGithubUrls();
-        showNotificationCounts();
-
-        showConnectivityAndLoginStatus();
-  }
+      */
+    
+    }
+  refreshDashboard();
 });
 
-loadGithubUrls();
-showNotificationCounts();
-showConnectivityAndLoginStatus();
+refreshDashboard();
 });

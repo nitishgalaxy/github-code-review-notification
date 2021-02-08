@@ -7,11 +7,14 @@ import store from './lib/data_store.js';
 
 
 async function refreshCounter(task){
-    console.log("Processing task : ", task);
-    const {pending_request_count, error_message} = await get_pending_review_count(task.url);
+    //console.log("Processing task : ", task);
+    const {pending_request_count, connection_error, login_error} = await get_pending_review_count(task.url);
 
-    const keyname_err_message = `err_message_${task.type}`;
-    store.set(keyname_err_message, error_message);
+    const keyname_connection_error = `connection_error_${task.type}`;
+    store.set(keyname_connection_error, connection_error);
+
+    const keyname_login_error = `login_error_${task.type}`;
+    store.set(keyname_login_error, login_error);
 
     if(pending_request_count != null){
         const keyname_count = `count_${task.type}`;
@@ -32,14 +35,14 @@ async function pollingService(){
     if(github_url_1.trim().length > 0){
         tasks.push({
             url: github_url_1,
-            type: 'github'
+            type: 'github_url_1'
         });
     }
 
     if(github_url_2.trim().length > 0){
         tasks.push({
             url: github_url_2,
-            type: 'github_enterprise'
+            type: 'github_url_2'
         });
     }
 
@@ -55,7 +58,7 @@ function schedulePollingService(){
 
 
 
-
+/*
 browser.storage.onChanged.addListener(function(changes, namespace) {
     for (var key in changes) {
       var storageChange = changes[key];
@@ -67,7 +70,9 @@ browser.storage.onChanged.addListener(function(changes, namespace) {
                   storageChange.newValue);
     }
   });
+*/
 
 //send_analytics('Background', 'Triggered');
+
 schedulePollingService()
 
