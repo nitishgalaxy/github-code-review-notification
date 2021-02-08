@@ -3,3 +3,4 @@ export const GITHUB_URL = "https://github.com";
 export const GITHUB_REVIEW_REQUEST_CSS_SELECTOR = "#js-issues-toolbar > div.Box-header.d-flex.flex-justify-between > div.table-list-filters.flex-auto.d-none.d-md-block.no-wrap > div > a.btn-link.selected";
 export const GITHUB_ENTERPRISE_REVIEW_REQUEST_CSS_SELECTOR = "#js-issues-toolbar > div.Box-header.d-flex.flex-justify-between > div.table-list-filters.flex-auto > div > a.btn-link.selected:nth-child(1)"
 export const POLLING_INTERVAL = 20; // Interval in Seconds
+export const NUM_GITHUB_ACCOUNTS = 2; // No. of githubs supported

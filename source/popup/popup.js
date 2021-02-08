@@ -1,4 +1,6 @@
 import store from '../lib/data_store.js';
+import {NUM_GITHUB_ACCOUNTS} from '../lib/constants.js';
+import {showNotification, clearBadge} from '../lib/notification.js'
 
 $(document).ready(function () {
 
@@ -72,6 +74,7 @@ async function showNotificationCount(ID){
     }
 }
 
+
 async function showConnectivityStatus(ID){
     const connection_error = await store.get(`connection_error_github_url_${ID}`);
     const span_connection_error = `connection_error_github_url_${ID}`;
@@ -98,14 +101,15 @@ async function showLoggedInStatus(ID){
 
 
 
+
 function refreshDashboard(){
-    var NUM_GITHUB_ACCOUNTS = 2;
     for(var ID=1; ID<=NUM_GITHUB_ACCOUNTS; ID++){
         loadGithubUrl(ID);
         showNotificationCount(ID);
         showConnectivityStatus(ID);
         showLoggedInStatus(ID);
     }
+    //showNotification();
 
 }
 
@@ -125,6 +129,10 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     }
   refreshDashboard();
 });
+
+
+document.getElementById("clear_notification").addEventListener("click", clearBadge);
+
 
 refreshDashboard();
 });

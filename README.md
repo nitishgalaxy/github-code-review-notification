@@ -11,5 +11,7 @@ https://github.com/fregante/webext-options-sync
 
 
 # Command to generate Production Build
+Current version compiled on NodeJS 10
+
 npm run build
 
