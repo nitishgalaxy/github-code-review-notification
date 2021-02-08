@@ -4,6 +4,7 @@ import {get_pending_review_count} from './lib/api.js';
 import {POLLING_INTERVAL} from './lib/constants.js';
 import store from './lib/data_store.js';
 import {showNotification} from './lib/notification.js'
+import {clearStorageForTask} from './lib/helpers.js';
 
 
 async function refreshCounter(task){
@@ -24,17 +25,7 @@ async function refreshCounter(task){
     showNotification();
 }
 
-async function clearStorageForTask(ID){
-    const keyname_connection_error = `connection_error_github_url_${ID}`;
-    await store.remove(keyname_connection_error);
 
-    const keyname_login_error = `login_error_github_url_${ID}`;
-    await store.remove(keyname_login_error);
-
-    const keyname_count = `count_github_url_${ID}`;
-    await store.remove(keyname_count);
-
-}
 
 
 async function pollingService(){
