@@ -52,7 +52,6 @@ async function getTotalPendingReview(){
 export async function showNotification(){
     const notification_count = await getTotalPendingReview();
     var prev_notification_count = await store.get(`prev_notification_count`);
-    var show_badge = true;
     var show_notification = false;
 
     if(!prev_notification_count){
@@ -61,14 +60,16 @@ export async function showNotification(){
 
     if(notification_count > prev_notification_count){
         show_notification = true;
+        await store.set(`hide_badge`, false);
     }
-
 
     if(show_notification){
         sendNotification();
     }
+
+    var hide_badge = await store.get(`hide_badge`);
     
-    if(show_badge){
+    if(!hide_badge){
         updateBadgeCount(notification_count+'');
     }
 
@@ -77,5 +78,6 @@ export async function showNotification(){
 
 
 export async function clearBadge(){
+    await store.set(`hide_badge`, true);
     updateBadgeCount('');
 }
