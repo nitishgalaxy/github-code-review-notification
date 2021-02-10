@@ -59,7 +59,7 @@ async function loadGithubUrl(ID){
     const github_url = await store.get(`github_url_${ID}`);
 
     
-    if(github_url.trim() === ''){
+    if(github_url === null || github_url === undefined || github_url.trim() === ''){
         // Hide container
         //console.log("Hiding container :", container_id);
         hideElementByID(container_id);
@@ -116,7 +116,7 @@ async function showLoggedInStatus(ID){
 
 
 export async function refreshDashboard(){
-    console.log("refreshDashboard called");
+    //console.log("refreshDashboard called");
     for(var ID=1; ID<=NUM_GITHUB_ACCOUNTS; ID++){
         await loadGithubUrl(ID);
         await showNotificationCount(ID);
