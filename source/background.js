@@ -57,7 +57,7 @@ async function pollingService(){
         clearStorageForTask(2);
     }
 
-    console.log('Tasks = ', tasks);
+    //console.log('Tasks = ', tasks);
     tasks.forEach(task=>refreshCounter(task));
     
 }

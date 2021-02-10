@@ -57,7 +57,7 @@ export async function get_pending_review_count(github_url){
         html = await response.text();
     } catch (error) {
         // Debug
-        //console.log(`Error reading '${target_url}' :`, error);
+        console.log(`Error reading '${target_url}' :`, error);
         error_message = 'connection_error';
         connection_error = true;
     } 
@@ -68,7 +68,7 @@ export async function get_pending_review_count(github_url){
         
         } catch (error) {
             // Debug
-            //console.log(`Error in get_pending_request_count_from_page :`, error);
+            console.log(`Error in get_pending_request_count_from_page :`, error);
             error_message = 'login_error'
             login_error = true;
         } 
