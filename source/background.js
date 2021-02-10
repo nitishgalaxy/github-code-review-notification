@@ -87,3 +87,4 @@ browser.storage.onChanged.addListener(function(changes, namespace) {
 
 schedulePollingService()
 
+pollingService();   // Poll first time on extension install
