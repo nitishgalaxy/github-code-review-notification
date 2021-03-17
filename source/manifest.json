@@ -16,7 +16,9 @@
 	"permissions": [
 		"storage",
 		"notifications",
-		"https://*/*"
+		"https://*/*",
+		"https://github.com/*",
+    	"https://github.office.opendns.com/*"
 	],
 	"options_ui": {
 		"chrome_style": true,
